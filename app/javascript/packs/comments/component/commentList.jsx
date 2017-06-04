@@ -2,12 +2,9 @@ import React, {Component} from 'react';
 import Remarkable from 'remarkable';
 
 export default class CommentList extends Component {
-  removeComment2(id) {
-    this.props.removeComment1(id)
-  }
   render() {
     var commentNodes = this.props.data.map( comment =>
-      <Comment author={comment.author} key={comment.id} id={comment.id} removeComment2={ this.removeComment2.bind(this) }>
+      <Comment author={comment.author} key={comment.id} id={comment.id} dispatch={this.props.dispatch}>
         {comment.text}
       </Comment>
     );
@@ -20,8 +17,8 @@ export default class CommentList extends Component {
 }
 
 class Comment extends Component {
-  handleDelete (id) {
-    this.props.removeComment2(this.props.id);
+  handleCommentDelete () {
+    this.props.dispatch('commentDelete', this.props.id);
   }
 
   rawMarkup() {
@@ -37,7 +34,7 @@ class Comment extends Component {
           <div className="comment card">
             <header className="card-header">
               <h2 className="commentAuthor card-header-title">{this.props.author}</h2>
-              <button className="delete" onClick={ this.handleDelete.bind(this) }></button>
+              <button className="delete" onClick={ this.handleCommentDelete.bind(this) }></button>
             </header>
             <div className="card-content">
               <span dangerouslySetInnerHTML={this.rawMarkup() } />

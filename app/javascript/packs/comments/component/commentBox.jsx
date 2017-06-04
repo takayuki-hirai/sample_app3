@@ -34,7 +34,7 @@ export default class CommentBox extends MicroContainer {
     })
   }
 
-  removeComment1(id) {
+  handleCommentDelete(id) {
     var comments = this.state.data;
     axios.delete(this.props.url + '/' + id).then(res => {
       this.setState({ data: _.filter(comments, function(comment){ return comment.id != id; }) });
@@ -46,7 +46,8 @@ export default class CommentBox extends MicroContainer {
 
   componentDidMount() {
     this.subscribe({
-      commentSubmit: this.handleCommentSubmit
+      commentSubmit: this.handleCommentSubmit,
+      commentDelete: this.handleCommentDelete
     });
     this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer.bind(this), this.props.pollInterval);
@@ -57,7 +58,7 @@ export default class CommentBox extends MicroContainer {
       <div>
         <section className="section">
           <h1 className="title">Comments</h1>
-          <CommentList data={this.state.data} removeComment1={ this.removeComment1.bind(this) } />
+          <CommentList data={this.state.data} dispatch={this.dispatch} />
         </section>
         <section className="section">
           <CommentForm dispatch={this.dispatch} />
