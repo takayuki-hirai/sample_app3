@@ -3,8 +3,9 @@ import CommentList from './commentList';
 import CommentForm from './commentForm';
 import axios from 'axios';
 import _ from 'underscore';
+import MicroContainer from 'react-micro-container';
 
-export default class CommentBox extends Component {
+export default class CommentBox extends MicroContainer {
   constructor() {
     super();
     this.state = { data: [] };
@@ -44,6 +45,9 @@ export default class CommentBox extends Component {
   }
 
   componentDidMount() {
+    this.subscribe({
+      commentSubmit: this.handleCommentSubmit
+    });
     this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer.bind(this), this.props.pollInterval);
   }
@@ -56,7 +60,7 @@ export default class CommentBox extends Component {
           <CommentList data={this.state.data} removeComment1={ this.removeComment1.bind(this) } />
         </section>
         <section className="section">
-          <CommentForm onCommentSubmit={event => this.handleCommentSubmit(event) } />
+          <CommentForm dispatch={this.dispatch} />
         </section>
       </div>
     );

@@ -18,7 +18,7 @@ export default class CommentForm extends Component {
     if (!text || !author) {
       return;
     }
-    this.props.onCommentSubmit({ author: author, text: text });
+    this.props.dispatch('commentSubmit', { author: author, text: text });
     this.setState({ author: '', text: '' });
   }
   render() {
