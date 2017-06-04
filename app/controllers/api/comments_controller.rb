@@ -12,6 +12,12 @@ module Api
       render json: @comment.to_json
     end
 
+    def destroy
+      comment = Comment.find_by!(id: params[:id])
+      comment.delete
+      render json: Comment.all.to_json
+    end
+
     private
 
     def comment_params
