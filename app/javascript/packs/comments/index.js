@@ -6,7 +6,7 @@ import 'bulma/css/bulma.css';
 class App extends React.Component {
   render() {
     return(
-      <CommentBox url="/api/comments" pollInterval={2000} />
+      <CommentBox url="/api/comments" pollInterval={10000} />
     );
   }
 }
