@@ -14,6 +14,11 @@ Things you may want to cover:
 * Database creation
 
 * Database initialization
+pg_ctl -D tmp/postgresql -l log/postgresql.log start
+
+* How to run the local environment
+./bin/webpack-dev-server
+bundle exec rails s
 
 * How to run the test suite
 

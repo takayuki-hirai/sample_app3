@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 
+import ActionCreator from "./ActionCreator"
+import eventEmitter from "./EventEmitter"
+var action = new ActionCreator(eventEmitter);
+
 export default class CommentForm extends Component {
   constructor() {
     super();
@@ -18,7 +22,8 @@ export default class CommentForm extends Component {
     if (!text || !author) {
       return;
     }
-    this.props.onCommentSubmit({ author: author, text: text });
+    action.commentPost({ author: author, text: text });
+    // FIXME move to store event
     this.setState({ author: '', text: '' });
   }
   render() {

@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import Remarkable from 'remarkable';
 
+import ActionCreator from "./ActionCreator"
+import eventEmitter from "./EventEmitter"
+var action = new ActionCreator(eventEmitter);
+
 export default class CommentList extends Component {
-  removeComment2(id) {
-    this.props.removeComment1(id)
-  }
   render() {
     var commentNodes = this.props.data.map( comment =>
-      <Comment author={comment.author} key={comment.id} id={comment.id} removeComment2={ this.removeComment2.bind(this) }>
+      <Comment author={comment.author} key={comment.id} id={comment.id}>
         {comment.text}
       </Comment>
     );
@@ -20,8 +21,8 @@ export default class CommentList extends Component {
 }
 
 class Comment extends Component {
-  handleDelete (id) {
-    this.props.removeComment2(this.props.id);
+  handleDelete() {
+    action.commentDelete(this.props.id);
   }
 
   rawMarkup() {
